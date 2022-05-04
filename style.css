@@ -5,6 +5,10 @@ body{
 header{
     background-color: black;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 header h1{
@@ -13,6 +17,34 @@ header h1{
     padding: 25px;
     font-size: 45px;
 }
+
+.todos{
+    background-color: transparent;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bolder;
+    border: none;
+}
+
+.todos:hover{
+    background-color: red;
+    cursor: pointer;
+}
+
+.favoritos{
+   background-color: transparent;
+    color: white;
+    padding: 10px 15px;
+    font-weight: bolder;
+    border: none;
+}
+
+.favoritos:hover{
+   background-color: red;
+    cursor: pointer;
+}
+
+
 
 .container_buscador{
     display: flex;
@@ -56,6 +88,7 @@ header h1{
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 80%, 80% 100%, 0 100%, 0% 80%, 0% 20%);
 }
 
 .AgregarFavoritos{
@@ -116,11 +149,10 @@ header h1{
     height: 50px;
 }
 
-.carta h3 {
+
+.sin-heroe{
+    width: 99%;
+    margin: 0 auto;
     text-align: center;
+    padding: 20px;
 }
-
-.carta ul{
-    height: 100px;
-}
-

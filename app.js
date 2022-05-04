@@ -19,12 +19,6 @@ const renderizar = ( item ) => {
         </button>
         <img src="${item.thumbnail.path +'.'+ item.thumbnail.extension}" alt="">
         <h2>${item.name}</h2>
-        <h3 id="prueba">Eventos</h3>
-        <ul>
-            <li>evento</li>
-            <li>evento</li>
-            <li>evento</li>
-        </ul>
     </div>
 `
  })
@@ -100,6 +94,42 @@ const quitarFavoritos = ( item ) => {
      
 }
 
+const mostrarFavoritos = async () => {
+    if(localStorage.getItem( 'superHeroes' )){
+     let arregloLocalStorage = JSON.parse( localStorage.getItem( 'superHeroes' ) )
+     let arrFavoritos = []
+
+     arregloLocalStorage.forEach( async (item) => {
+        let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${item}`
+        let getData = await fetch( urlBuscar )
+        let data = await getData.json()
+        let superHeroes = data.data.results
+        arrFavoritos.push(superHeroes[0])
+
+     })   
+
+    let conteo = 0
+     const tiempo = setInterval( async ()=>{
+        renderizar( arrFavoritos )
+        traerDelLocalStorage(arrFavoritos)
+        conteo ++
+        console.log(conteo)
+        if ( conteo === 2) {
+            clearInterval(tiempo)
+        }
+     },1000)
+
+     
+   
+
+
+    } else {
+        let lugar = document.getElementById( 'cartas' );
+        lugar.innerHTML = 
+        `<h1 class="sin-heroe">No tienes ningun personaje agregado a favoritos</h1>`
+        
+    }
+}
 
 
  const traerDelLocalStorage = ( item ) => {
