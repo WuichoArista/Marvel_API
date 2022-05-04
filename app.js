@@ -1,9 +1,8 @@
-
-    let arr =[]
+let arr =[];
 
 const renderizar = ( item ) => {
  let lugar = document.getElementById( 'cartas' );
- lugar.innerHTML = ''
+ lugar.innerHTML = '';
  item.forEach( ( item ) => {
     lugar.innerHTML += `
     <div class="carta">
@@ -20,136 +19,126 @@ const renderizar = ( item ) => {
         <img src="${item.thumbnail.path +'.'+ item.thumbnail.extension}" alt="">
         <h2>${item.name}</h2>
     </div>
-`
- })
+`;
+ });
 };
 
 const cargar = async () => { 
-    let url = 'https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50'
-    let getData = await fetch( url )
-    let data = await getData.json()
-    let superHeroes = data.data.results    
-    renderizar ( superHeroes )
-    traerDelLocalStorage( superHeroes)
+    let url = 'https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50';
+    let getData = await fetch( url );
+    let data = await getData.json();
+    let superHeroes = data.data.results;    
+    renderizar ( superHeroes );
+    traerDelLocalStorage( superHeroes);
 }
 
 const buscar = async () => {
-    let infoBuscar = document.getElementById( 'buscador' ).value
+    let infoBuscar = document.getElementById( 'buscador' ).value;
     if(infoBuscar === ''){
-        cargar()
+        cargar();
     } else {
-        let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${infoBuscar}`
-        let getData = await fetch( urlBuscar )
-        let data = await getData.json()
-        let superHeroes = data.data.results
-        renderizar( superHeroes )
-        traerDelLocalStorage( superHeroes)
+        let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${infoBuscar}`;
+        let getData = await fetch( urlBuscar );
+        let data = await getData.json();
+        let superHeroes = data.data.results;
+        renderizar( superHeroes );
+        traerDelLocalStorage( superHeroes );
     }
 }
 
 
-const inputValue = () => {
-    let infoBuscar = document.getElementById( 'buscador' ).value
-    if(infoBuscar === ''){
-        cargar()
-    } else {
-        buscar()
-    }
-}
+
 
 const favoritos = async ( item ) => {
-    let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${item}`
-    let getData = await fetch( urlBuscar )
-    let data = await getData.json()
-    let superHeroes = data.data.results
-    arr.push( superHeroes[0].name )
-    localStorage.setItem('superHeroes' , JSON.stringify(arr))
+    let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${item}`;
+    let getData = await fetch( urlBuscar );
+    let data = await getData.json();
+    let superHeroes = data.data.results;
+    arr.push( superHeroes[0].name );
+    localStorage.setItem('superHeroes' , JSON.stringify(arr));
 
-    let boton = document.getElementById(`AgregarFavorito(${item})`)
-    boton.classList.add('AgregarFavoritos_no_ver')
+    let boton = document.getElementById(`AgregarFavorito(${item})`);
+    boton.classList.add('AgregarFavoritos_no_ver');
     
-    let botonX = document.getElementById(`EliminarFavoritos(${item})`)
-    botonX.classList.add('EliminarFavoritos_ver')
+    let botonX = document.getElementById(`EliminarFavoritos(${item})`);
+    botonX.classList.add('EliminarFavoritos_ver');
     
 }
 
 const quitarFavoritos = ( item ) => {
 
-    let boton = document.getElementById(`AgregarFavorito(${item})`)
-    boton.classList.remove('AgregarFavoritos_no_ver')
+    let boton = document.getElementById(`AgregarFavorito(${item})`);
+    boton.classList.remove('AgregarFavoritos_no_ver');
     
-    let botonX = document.getElementById(`EliminarFavoritos(${item})`)
-    botonX.classList.remove('EliminarFavoritos_ver')
+    let botonX = document.getElementById(`EliminarFavoritos(${item})`);
+    botonX.classList.remove('EliminarFavoritos_ver');
 
     
     arr.forEach( (hero , index) => {
         if( hero === item ){ 
-          arr.splice( index , 1)
-          localStorage.setItem('superHeroes' , JSON.stringify(arr))
+          arr.splice( index , 1);
+          localStorage.setItem('superHeroes' , JSON.stringify(arr));
         }
         if ( arr.length === 0 ) {
-            localStorage.removeItem('superHeroes')
+            localStorage.removeItem('superHeroes');
         }
      })
+
+     mostrarFavoritos();
      
 }
 
 const mostrarFavoritos = async () => {
     if(localStorage.getItem( 'superHeroes' )){
-     let arregloLocalStorage = JSON.parse( localStorage.getItem( 'superHeroes' ) )
-     let arrFavoritos = []
+     let arregloLocalStorage = JSON.parse( localStorage.getItem( 'superHeroes' ) );
+     let arrFavoritos = [];
 
      arregloLocalStorage.forEach( async (item) => {
-        let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${item}`
-        let getData = await fetch( urlBuscar )
-        let data = await getData.json()
-        let superHeroes = data.data.results
-        arrFavoritos.push(superHeroes[0])
+        let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${item}`;
+        let getData = await fetch( urlBuscar );
+        let data = await getData.json();
+        let superHeroes = data.data.results;
+        arrFavoritos.push(superHeroes[0]);
 
      })   
 
     let conteo = 0
      const tiempo = setInterval( async ()=>{
-        renderizar( arrFavoritos )
-        traerDelLocalStorage(arrFavoritos)
-        conteo ++
-        console.log(conteo)
-        if ( conteo === 2) {
-            clearInterval(tiempo)
+        renderizar( arrFavoritos );
+        traerDelLocalStorage(arrFavoritos);
+        conteo ++;
+        if ( conteo === 1) {
+            clearInterval(tiempo);
         }
-     },1000)
-
-     
-   
-
+     },1000);
 
     } else {
         let lugar = document.getElementById( 'cartas' );
         lugar.innerHTML = 
-        `<h1 class="sin-heroe">No tienes ningun personaje agregado a favoritos</h1>`
+        `<h1 class="sin-heroe">No tienes ningun personaje agregado a favoritos</h1>`;
         
     }
 }
 
 
  const traerDelLocalStorage = ( item ) => {
-     let arregloLocalStorage = JSON.parse( localStorage.getItem( 'superHeroes' ) )
-    if( arregloLocalStorage === null ){
-        arr = []
+     let arregloLocalStorage = JSON.parse( localStorage.getItem( 'superHeroes' ) );
+    if( arregloLocalStorage === null ){;
+        arr = [];
     } else {
-        arr = arregloLocalStorage
+        arr = arregloLocalStorage;
              arregloLocalStorage.forEach( (local) => {
                 item.forEach( ( itm ) => {
                     if ( itm.name === local) {
-                        let boton = document.getElementById(`AgregarFavorito(${itm.name})`)
-                        boton.classList.add('AgregarFavoritos_no_ver')
-                        let botonX = document.getElementById(`EliminarFavoritos(${itm.name})`)
-                         botonX.classList.add('EliminarFavoritos_ver')
-                    }
-                } )
-            })   
-    } 
-} 
+                        let boton = document.getElementById(`AgregarFavorito(${itm.name})`);
+                        boton.classList.add('AgregarFavoritos_no_ver');
+                        let botonX = document.getElementById(`EliminarFavoritos(${itm.name})`);
+                         botonX.classList.add('EliminarFavoritos_ver');
+                    };
+                } );
+            });
+    };
+}; 
 
 
-inputValue()
+cargar();
