@@ -49,6 +49,7 @@ const buscar = async () => {
         let data = await getData.json()
         let superHeroes = data.data.results
         renderizar( superHeroes )
+        traerDelLocalStorage( superHeroes)
     }
 }
 
