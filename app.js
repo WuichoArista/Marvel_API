@@ -44,8 +44,13 @@ const buscar = async () => {
         let getData = await fetch( urlBuscar );
         let data = await getData.json();
         let superHeroes = data.data.results;
-        renderizar( superHeroes );
-        traerDelLocalStorage(superHeroes);
+        if( superHeroes.length > 0){
+            renderizar( superHeroes );
+            traerDelLocalStorage(superHeroes);
+        } else {
+            cargar()
+        }
+        
     }
 }
 
