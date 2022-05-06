@@ -41,16 +41,24 @@ const buscar = async () => {
         cargar();
     } else {
         let urlBuscar = `https://gateway.marvel.com:443/v1/public/characters?apikey=e3385dba8089b6e50a1be6f8c2fe4b04&ts=1651340733&hash=45c5a8ed9549ab938d288597775573cf&limit=50&nameStartsWith=${infoBuscar}`;
-        let getData = await fetch( urlBuscar );
-        let data = await getData.json();
+        let getData = await fetch( urlBuscar )
+                    .then( (respuesta) => respuesta.json())
+                    .then ( (data) => {
+                        let superHeroes = data.data.results;
+                        if( superHeroes.length <= 0){
+                            let lugar = document.getElementById( 'cartas' );
+                            lugar.innerHTML = 
+                            `El personaje ${infoBuscar} no existe`;                     
+                        }else{
+                            renderizar( superHeroes );
+                            traerDelLocalStorage(superHeroes);
+    
+                        }
+                    })
+        /* let data = await getData.json();
         let superHeroes = data.data.results;
-        if( superHeroes.length > 0){
-            renderizar( superHeroes );
-            traerDelLocalStorage(superHeroes);
-        } else {
-            cargar()
-        }
-        
+        renderizar( superHeroes );
+        traerDelLocalStorage(superHeroes); */
     }
 }
 
