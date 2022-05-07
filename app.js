@@ -7,6 +7,7 @@ const renderizar = ( item ) => {
      let name = item.name
      let path = item.thumbnail.path 
      let extension = item.thumbnail.extension
+     let comic = item.comics.items[0]
     lugar.innerHTML += `
     <div class="carta">
         <button onclick="favoritos('${name}' , '${path}' , '${extension}' )" id="AgregarFavorito(${name})" class="AgregarFavoritos" >
@@ -21,6 +22,7 @@ const renderizar = ( item ) => {
         </button>
         <img src="${path + '.' + extension}" alt="">
         <h2>${name}</h2>
+        <p><b><br>Comic:</br></b> ${ comic === undefined ? 'sin registo' : comic.name}</p>
     </div>
 `;
  });
