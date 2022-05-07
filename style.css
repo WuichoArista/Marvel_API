@@ -186,3 +186,16 @@ header h1{
 }
 
 
+.error{
+    background-color: rgba(255, 0, 0, 0.438);
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.imagen_error{
+    width: 250px;
+    height: auto;
+}

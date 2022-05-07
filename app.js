@@ -48,7 +48,9 @@ const buscar = async () => {
                         if( superHeroes.length <= 0){
                             let lugar = document.getElementById( 'cartas' );
                             lugar.innerHTML = 
-                            `El personaje ${infoBuscar} no existe`;                     
+                            `<h4 class="error"> UPSS!! El personaje ${infoBuscar} no existe</h4>
+                            <img class="imagen_error" src="./assets/img/deadpool.png" alt="">
+                            `;                     
                         }else{
                             renderizar( superHeroes );
                             traerDelLocalStorage(superHeroes);
